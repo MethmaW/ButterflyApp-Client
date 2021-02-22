@@ -1,12 +1,39 @@
 import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import './App.css';
 import axios from "axios";
+import Cookies from "js-cookie";
+
+//redux
+import { useSelector } from 'react-redux'
+
+
+
+import { Login, Register, Reset, Search, Results } from "./rootImport";
 
 
 function App() {
+
+
+  let authToken = "";
+
+  try {
+    authToken = Cookies.get("BD_AUTH");
+  } catch (err) {
+    console.log("Cookie doesn't exist");
+  }
+
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // redux
+  const viewReducer = useSelector((state) => state.viewReducer);
 
   const handleName = (e) => {
     console.log(name);
@@ -74,21 +101,62 @@ function App() {
       });
   };
 
-
-
-
-
   return (
-    <div>
-      <input placeholder="name" onChange={handleName} />
-      <input placeholder="email" onChange={handleEmail} />
-      <input placeholder="password" onChange={handlePassword} />
-      <button onClick={hanldeLogIn}>Log in</button>
+    <>
+      {/* <div>
+        <input placeholder="name" onChange={handleName} />
+        <input placeholder="email" onChange={handleEmail} />
+        <input placeholder="password" onChange={handlePassword} />
+        <button onClick={hanldeLogIn}>Log in</button>
 
-      <button onClick={handleTwoFA}>Verify email</button>
+        <button onClick={handleTwoFA}>Verify email</button>
 
-      <button onClick={handlePosts}>Show posts</button>
-    </div>
+        <button onClick={handlePosts}>Show posts</button>
+      </div> */}
+
+      <Router>
+        {/* Browser paths  */}
+        {!authToken && (
+          <Route exact path="/user/register" component={Register} />
+        )}
+
+        {!authToken && <Route exact path="/user/login" component={Login} />}
+
+        {!authToken && (
+          <Route exact path="/user/reset-password" component={Reset} />
+        )}
+
+        {viewReducer === "RESULTS" && (
+          <Route exact path="/results" component={Results} />
+        )}
+
+        {/* Public paths */}
+        <Route path="/user/login">
+          {viewReducer === "REGISTER" && <Redirect to="/user/register" />}
+        </Route>
+
+        <Route path="/user/login">
+          {viewReducer === "RESET" && <Redirect to="/user/reset-password" />}
+        </Route>
+
+        <Route path="/reset-password">
+          {viewReducer === "LOGIN" && <Redirect to="/user/login" />}
+        </Route>
+
+        {/* Private paths */}
+        {authToken && viewReducer !== "RESULTS" && <Search />}
+        <Route path="/search">
+          {viewReducer === "RESULTS" && <Redirect to="/results" />}
+        </Route>
+
+        {/* Redirect paths */}
+        <Route path="/">{authToken && <Redirect to="/search" />}</Route>
+        <Route path="/">{!authToken && <Redirect to="/user/login" />}</Route>
+        <Route path="/">
+          {viewReducer === "LOGIN" && <Redirect to="/user/login" />}
+        </Route>
+      </Router>
+    </>
   );
 }
 
