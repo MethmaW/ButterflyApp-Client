@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Form, Input, Button, Row, Col, notification } from "antd";
+import { Form, Input, Button, Row, Col, notification, Upload } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
+import ImgCrop from "antd-img-crop";
 import { SpinnerCircularSplit, SpinnerDotted } from "spinners-react";
 import validator from "email-validator";
 import passwordValidator from "password-validator";
+import FormData from "form-data";
 import "./logreg.css";
 
 import Cookies from "js-cookie";
@@ -37,6 +39,7 @@ const Register = () => {
   const [numFive, setNumFive] = useState("");
   const [numSix, setNumSix] = useState("");
   const [showSpinner, setShowSpinner] = useState("none");
+  const [isImg, setIsImg] = useState("");
 
   //response notifications
   const openNotificationWithIcon = (type, msg) => {
@@ -47,12 +50,44 @@ const Register = () => {
   };
 
   //Upload profile picture
-  let uploadImg = () => {
-    const imgUpload = document.querySelector("#imgUpload");
+  const [fileList, setFileList] = useState([]);
+
+  const onChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
   };
+
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow.document.write(image.outerHTML);
+  };
+
+  const ifSuccess = () => {
+    return true;
+  };
+
+  console.log(fileList);
 
   //submiting register inputs to get the passcode
   const onFinish = async (values) => {
+    //Profile picture
+    const validImg = fileList.length !== 0
+    if (!validImg) {
+      setIsImg("");
+    } else {
+      setIsImg(fileList[0].thumbUrl)
+    }
+
+
     //validating username
     const validName = name.length >= 6;
     if (!validName) {
@@ -95,6 +130,7 @@ const Register = () => {
 
     if (validMainPass && validPassword && validEmail && validName) {
       setShowSpinner("");
+
       await axios({
         method: "POST",
         url: "http://localhost:8080/api/user/register",
@@ -108,14 +144,6 @@ const Register = () => {
           setShowSpinner("none");
           console.log(response);
           if (response.data.error) {
-            // if (response.data) {
-            //   setNotificationMsg(response.data);
-            //   response.status && openNotificationWithIcon("error");
-            // }
-
-            // setNotificationMsg(response.data);
-            // response.status && openNotificationWithIcon("error");
-
             const msg = response.data.error;
             openNotificationWithIcon("error", msg);
           }
@@ -129,12 +157,29 @@ const Register = () => {
     }
   };
 
+  //  console.log(fileList[0].thumbUrl);
+
   //submitting the passcode
   const handlePasscode = async () => {
     setShowSpinner("");
     console.log(numOne + numTwo + numThree + numFour + numFive + numSix);
 
     let code = numOne + numTwo + numThree + numFour + numFive + numSix;
+
+    // const validfileList = fileList.length !== 0;
+    // if (validfileList) {
+    //   setIsImg(fileList[0].thumbUrl);
+    // } else {
+    //   setIsImg("");
+    // }
+
+    // if (fileList.length === 0) {
+    //   console.log(fileL)
+    //   setIsImg("");
+    // } else {
+    //   console.log(fileList[0].thumbUrl);
+    //   setIsImg(fileList[0].thumbUrl);
+    // }
 
     await axios({
       method: "POST",
@@ -144,6 +189,7 @@ const Register = () => {
         email: email,
         password: password,
         code: code,
+        img: isImg,
       },
     })
       .then(function (response) {
@@ -196,18 +242,31 @@ const Register = () => {
               className="regForm"
             >
               <Form.Item>
-                <input
+                {/* <input
                   type="file"
                   id="imgUpload"
                   hidden
-                  onChange={uploadImg}
+                  // onChange={uploadImg}
                   accept="image/*"
                 />
                 <label for="imgUpload" className="imgUpload">
                   <div className="uploadPic">
                     <p className="uploadTxt">Upload Image</p>
                   </div>
-                </label>
+                </label> */}
+
+                <ImgCrop rotate>
+                  <Upload
+                    beforeUpload={ifSuccess}
+                    action="http://localhost:8080/temp/images"
+                    listType="picture-card"
+                    fileList={fileList}
+                    onChange={onChange}
+                    onPreview={onPreview}
+                  >
+                    {fileList.length <= 0 && "+ Upload"}
+                  </Upload>
+                </ImgCrop>
               </Form.Item>
 
               <Form.Item

@@ -32,14 +32,6 @@ const Login = () => {
   //redux
   const dispatch = useDispatch();
 
-  // //backend response notifications
-  // const openNotificationWithIcon = (type) => {
-  //   notification[type]({
-  //     message: "Error",
-  //     description: "Email or the Password is incorrect, Please try again",
-  //   });
-  // };
-
   //response notifications
   const openNotificationWithIcon = (type, msg) => {
     notification[type]({
@@ -62,11 +54,23 @@ const Login = () => {
     dispatch(changeView("SEARCH"));
   };
 
+  //Handle login with google
+  const failureGoogle = (response) => {
+    console.log(response);
+    const msg = "Login with Google was unsuccessfull";
+    openNotificationWithIcon("error", msg);
+  };
+
   const onFinish = async (values) => {
     //validating email
     const validEmail = validator.validate(email);
-    if (!validEmail) {
-      const msg = "Please enter a valid email address";
+
+    const validName = email.length === 6;
+
+    const validEmailName = validEmail || validName;
+
+    if (!validEmailName) {
+      const msg = "Please enter a valid username or an email";
       openNotificationWithIcon("error", msg);
     }
 
@@ -92,7 +96,7 @@ const Login = () => {
       openNotificationWithIcon("error", msg);
     }
 
-    if (validEmail && validMainPass) {
+    if (validEmailName && validMainPass) {
       setShowSpinner("");
       console.log(values);
 
@@ -186,7 +190,7 @@ const Login = () => {
               clientId={process.env.REACT_APP_GCLIENTID}
               buttonText="Login with Google"
               onSuccess={responseGoogle}
-              onFailure={responseGoogle}
+              onFailure={failureGoogle}
               cookiePolicy={"single_host_origin"}
               className="googleIn"
             />
@@ -276,8 +280,7 @@ const Login = () => {
                 thickness={150}
                 speed={60}
                 style={{ position: "absolute", top: "55%", left: "35%" }}
-                color="rgba(57, 172, 104, 1)"
-                secondaryColor="rgba(57, 172, 111, 0.3)"
+                color="#0aa06c"
               />
             </Col>
             <Col span={12}>
