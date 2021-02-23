@@ -6,7 +6,6 @@ import ImgCrop from "antd-img-crop";
 import { SpinnerCircularSplit, SpinnerDotted } from "spinners-react";
 import validator from "email-validator";
 import passwordValidator from "password-validator";
-import FormData from "form-data";
 import "./logreg.css";
 
 import Cookies from "js-cookie";
@@ -31,7 +30,6 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
-  const [notificationMsg, setNotificationMsg] = useState("");
   const [numOne, setNumOne] = useState("");
   const [numTwo, setNumTwo] = useState("");
   const [numThree, setNumThree] = useState("");
@@ -75,7 +73,7 @@ const Register = () => {
     return true;
   };
 
-  console.log(fileList);
+  // console.log(fileList);
 
   //submiting register inputs to get the passcode
   const onFinish = async (values) => {
@@ -141,7 +139,7 @@ const Register = () => {
       })
         .then(function (response) {
           setShowSpinner("none");
-          console.log(response);
+          // console.log(response);
           if (response.data.error) {
             const msg = response.data.error;
             openNotificationWithIcon("error", msg);
@@ -159,7 +157,7 @@ const Register = () => {
   //submitting the passcode
   const handlePasscode = async () => {
     setShowSpinner("");
-    console.log(numOne + numTwo + numThree + numFour + numFive + numSix);
+    // console.log(numOne + numTwo + numThree + numFour + numFive + numSix);
 
     let code = numOne + numTwo + numThree + numFour + numFive + numSix;
 
@@ -176,7 +174,7 @@ const Register = () => {
     })
       .then(function (response) {
         setShowSpinner("none");
-        console.log(response);
+        // console.log(response);
 
         if (response.data.error) {
           const msg = response.data.error;
@@ -191,7 +189,7 @@ const Register = () => {
       })
       .catch(function (error) {
         setShowSpinner("none");
-        console.log(error);
+        // console.log(error);
       });
   };
 
@@ -267,7 +265,7 @@ const Register = () => {
                   className="logInputEmail"
                   onChange={(e) => {
                     setName(e.target.value);
-                    console.log(name);
+                    // console.log(name);
                   }}
                 />
               </Form.Item>
@@ -284,7 +282,7 @@ const Register = () => {
                   className="logInputPass"
                   onChange={(e) => {
                     setEmail(e.target.value);
-                    console.log(email);
+                    // console.log(email);
                   }}
                 />
               </Form.Item>
@@ -305,7 +303,7 @@ const Register = () => {
                   className="logInputPass"
                   onChange={(e) => {
                     setPassword(e.target.value);
-                    console.log(password);
+                    // console.log(password);
                   }}
                 />
               </Form.Item>
@@ -318,7 +316,7 @@ const Register = () => {
                   className="logInputPass"
                   onChange={(e) => {
                     setConfirmPassword(e.target.value);
-                    console.log(confirmPassword);
+                    // console.log(confirmPassword);
                   }}
                 />
                 <p style={{ marginBottom: "0", color: "red" }}>

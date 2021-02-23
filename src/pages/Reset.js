@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Form, Input, Button, notification, Row, Col } from "antd";
-import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import Cookies from "js-cookie";
 import { SpinnerCircularSplit, SpinnerDotted } from "spinners-react";
 import validator from "email-validator";
@@ -45,8 +45,7 @@ const Reset = () => {
   }
 
   const onFinish = async (values) => {
-  
-    console.log(values);
+    // console.log(values);
 
     //validating email
     const validEmail = validator.validate(email);
@@ -56,7 +55,7 @@ const Reset = () => {
     }
 
     if (validEmail) {
-        setShowSpinner("");
+      setShowSpinner("");
       await axios({
         method: "POST",
         url: "http://localhost:8080/api/user/forgot-password",
@@ -66,7 +65,7 @@ const Reset = () => {
       })
         .then(function (response) {
           setShowSpinner("none");
-          console.log(response);
+          // console.log(response);
           if (response.data.error) {
             const msg = response.data.error;
             openNotificationWithIcon("error", msg);
@@ -80,15 +79,15 @@ const Reset = () => {
         })
         .catch(function (error) {
           setShowSpinner("none");
-          console.log(error);
+          // console.log(error);
         });
     }
   };
 
   //submitting the passcode
   const handlePasscode = async () => {
-              setShowSpinner("");
-    console.log(numOne + numTwo + numThree + numFour + numFive + numSix);
+    setShowSpinner("");
+    // console.log(numOne + numTwo + numThree + numFour + numFive + numSix);
 
     let code = numOne + numTwo + numThree + numFour + numFive + numSix;
 
@@ -102,17 +101,17 @@ const Reset = () => {
     })
       .then(function (response) {
         setShowSpinner("none");
-        console.log(response);
+        // console.log(response);
         if (response.data.codeStatus === "success") {
           setShowReset(true);
         } else {
           const msg = "Wrong passcode, please try again";
-          openNotificationWithIcon("error", msg)
+          openNotificationWithIcon("error", msg);;
         }
       })
       .catch(function (error) {
         setShowSpinner("none");
-        console.log(error);
+        // console.log(error);
       });
   };
 
@@ -129,7 +128,7 @@ const Reset = () => {
       })
         .then(function (response) {
           setShowSpinner("none");
-          console.log(response);
+          // console.log(response);
           handleCookie(response.data.token);
           if (response.data.token) {
             dispatch(changeView("SEARCH"));
@@ -137,7 +136,7 @@ const Reset = () => {
         })
         .catch(function (error) {
           setShowSpinner("none");
-          console.log(error);
+          // console.log(error);
         });
     }
   };
@@ -191,7 +190,7 @@ const Reset = () => {
                 className="logInputPass"
                 onChange={(e) => {
                   setEmail(e.target.value);
-                  console.log(email);
+                  // console.log(email);
                 }}
               />
             </Form.Item>
@@ -308,7 +307,7 @@ const Reset = () => {
                 className="logInputPass"
                 onChange={(e) => {
                   setPassword(e.target.value);
-                  console.log(password);
+                  // console.log(password);
                 }}
               />
             </Form.Item>
@@ -321,7 +320,7 @@ const Reset = () => {
                 className="logInputPass"
                 onChange={(e) => {
                   setConfirmPassword(e.target.value);
-                  console.log(confirmPassword);
+                  // console.log(confirmPassword);
                 }}
               />
               <p style={{ marginBottom: "0", color: "red" }}>

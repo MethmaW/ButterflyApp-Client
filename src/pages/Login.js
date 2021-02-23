@@ -20,7 +20,6 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
-  const [notificationMsg, setNotificationMsg] = useState("");
   const [numOne, setNumOne] = useState("");
   const [numTwo, setNumTwo] = useState("");
   const [numThree, setNumThree] = useState("");
@@ -49,14 +48,14 @@ const Login = () => {
 
   //Handle login with google
   const responseGoogle = (response) => {
-    console.log(response.accessToken);
+    // console.log(response.accessToken);
     handleCookie(response.accessToken);
     dispatch(changeView("SEARCH"));
   };
 
   //Handle login with google
   const failureGoogle = (response) => {
-    console.log(response);
+    // console.log(response);
     const msg = "Login with Google was unsuccessfull";
     openNotificationWithIcon("error", msg);
   };
@@ -101,7 +100,7 @@ const Login = () => {
 
     if (validEmailName && validMainPass) {
       setShowSpinner("");
-      console.log(values);
+      // console.log(values);
 
       await axios({
         method: "POST",
@@ -113,7 +112,7 @@ const Login = () => {
       })
         .then(function (response) {
           setShowSpinner("none");
-          console.log(response);
+          // console.log(response);
           if (response.data.error) {
             const msg = response.data.error;
             openNotificationWithIcon("error", msg);
@@ -125,7 +124,7 @@ const Login = () => {
         })
         .catch(function (error) {
           setShowSpinner("none");
-          console.log(error);
+          // console.log(error);
         });
     }
   };
@@ -134,7 +133,7 @@ const Login = () => {
   const handlePasscode = async () => {
     setShowSpinner("");
 
-    console.log(numOne + numTwo + numThree + numFour + numFive + numSix);
+    // console.log(numOne + numTwo + numThree + numFour + numFive + numSix);
 
     let code = numOne + numTwo + numThree + numFour + numFive + numSix;
 
@@ -149,7 +148,7 @@ const Login = () => {
     })
       .then(function (response) {
         setShowSpinner("none");
-        console.log(response);
+        // console.log(response);
 
         if (response.data.error) {
           const msg = response.data.error;
@@ -164,7 +163,7 @@ const Login = () => {
       })
       .catch(function (error) {
         setShowSpinner("none");
-        console.log(error);
+        // console.log(error);
       });
   };
 
@@ -236,7 +235,7 @@ const Login = () => {
                   className="logInputEmail"
                   onChange={(e) => {
                     setEmail(e.target.value);
-                    console.log(email);
+                    // console.log(email);
                   }}
                 />
               </Form.Item>
@@ -253,7 +252,7 @@ const Login = () => {
                   className="logInputPass"
                   onChange={(e) => {
                     setPassword(e.target.value);
-                    console.log(password);
+                    // console.log(password);
                   }}
                 />
               </Form.Item>

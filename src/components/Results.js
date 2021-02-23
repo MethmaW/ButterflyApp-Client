@@ -6,8 +6,6 @@ import "./search.css";
 //redux
 import { useSelector } from "react-redux";
 
-const { Meta } = Card;
-
 const Results = () => {
   // redux
   const resultsReducer = useSelector((state) => state.resultsReducer);

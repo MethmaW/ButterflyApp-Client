@@ -42,7 +42,7 @@ const Search = () => {
   try {
     authToken = Cookies.get("BD_AUTH");
   } catch (err) {
-    console.log("Cookie doesn't exist");
+    // console.log("Cookie doesn't exist");
   }
 
   let colors = [];
@@ -69,8 +69,8 @@ const Search = () => {
   large && sizes.push("L ");
   toddler && sizes.push("T ");
 
-  console.log(colors);
-  console.log(sizes);
+  // console.log(colors);
+  // console.log(sizes);
 
   const openNotificationWithIcon = (type, msg) => {
     notification[type]({
@@ -116,7 +116,7 @@ const Search = () => {
           dispatch(changeView("RESULTS"));
         })
         .catch(function (error) {
-          console.log(error);
+          // console.log(error);
         });
     }
   };
