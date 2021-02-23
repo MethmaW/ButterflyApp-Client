@@ -166,21 +166,6 @@ const Register = () => {
 
     let code = numOne + numTwo + numThree + numFour + numFive + numSix;
 
-    // const validfileList = fileList.length !== 0;
-    // if (validfileList) {
-    //   setIsImg(fileList[0].thumbUrl);
-    // } else {
-    //   setIsImg("");
-    // }
-
-    // if (fileList.length === 0) {
-    //   console.log(fileL)
-    //   setIsImg("");
-    // } else {
-    //   console.log(fileList[0].thumbUrl);
-    //   setIsImg(fileList[0].thumbUrl);
-    // }
-
     await axios({
       method: "POST",
       url: "http://localhost:8080/api/user/confirm-email",
@@ -242,19 +227,6 @@ const Register = () => {
               className="regForm"
             >
               <Form.Item>
-                {/* <input
-                  type="file"
-                  id="imgUpload"
-                  hidden
-                  // onChange={uploadImg}
-                  accept="image/*"
-                />
-                <label for="imgUpload" className="imgUpload">
-                  <div className="uploadPic">
-                    <p className="uploadTxt">Upload Image</p>
-                  </div>
-                </label> */}
-
                 <ImgCrop rotate>
                   <Upload
                     beforeUpload={ifSuccess}
