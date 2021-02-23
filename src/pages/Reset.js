@@ -4,6 +4,7 @@ import { Form, Input, Button, notification, Row, Col } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import Cookies from "js-cookie";
 import { SpinnerCircularSplit, SpinnerDotted } from "spinners-react";
+import validator from "email-validator";
 
 import "./logreg.css";
 
@@ -15,7 +16,6 @@ const Reset = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [notificationMsg, setNotificationMsg] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [showReset, setShowReset] = useState(false);
   const [numOne, setNumOne] = useState("");
@@ -24,17 +24,10 @@ const Reset = () => {
   const [numFour, setNumFour] = useState("");
   const [numFive, setNumFive] = useState("");
   const [numSix, setNumSix] = useState("");
+  const [showSpinner, setShowSpinner] = useState("none");
 
   //redux
   const dispatch = useDispatch();
-
-  //backend response notifications
-  // const openNotificationWithIcon = (type) => {
-  //   notification[type]({
-  //     message: "Error",
-  //     description: notificationMsg,
-  //   });
-  // };
 
   //response notifications
   const openNotificationWithIcon = (type, msg) => {
@@ -52,35 +45,49 @@ const Reset = () => {
   }
 
   const onFinish = async (values) => {
+  
     console.log(values);
 
-    await axios({
-      method: "POST",
-      url: "http://localhost:8080/api/user/forgot-password",
-      data: {
-        email: email,
-      },
-    })
-      .then(function (response) {
-        console.log(response);
-        if (response.data.error) {
-          const msg = response.data.error;
-          openNotificationWithIcon("error", msg);
-          setTimeout(() => {
-            dispatch(changeView("LOGIN"));
-          }, 2000);
-        }
-        if (response.data.forgotStatus === "success") {
-          setIsSuccess(true);
-        }
+    //validating email
+    const validEmail = validator.validate(email);
+    if (!validEmail) {
+      const msg = "Please enter a valid email address";
+      openNotificationWithIcon("error", msg);
+    }
+
+    if (validEmail) {
+        setShowSpinner("");
+      await axios({
+        method: "POST",
+        url: "http://localhost:8080/api/user/forgot-password",
+        data: {
+          email: email,
+        },
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .then(function (response) {
+          setShowSpinner("none");
+          console.log(response);
+          if (response.data.error) {
+            const msg = response.data.error;
+            openNotificationWithIcon("error", msg);
+            setTimeout(() => {
+              dispatch(changeView("LOGIN"));
+            }, 2000);
+          }
+          if (response.data.forgotStatus === "success") {
+            setIsSuccess(true);
+          }
+        })
+        .catch(function (error) {
+          setShowSpinner("none");
+          console.log(error);
+        });
+    }
   };
 
   //submitting the passcode
   const handlePasscode = async () => {
+              setShowSpinner("");
     console.log(numOne + numTwo + numThree + numFour + numFive + numSix);
 
     let code = numOne + numTwo + numThree + numFour + numFive + numSix;
@@ -94,17 +101,23 @@ const Reset = () => {
       },
     })
       .then(function (response) {
+        setShowSpinner("none");
         console.log(response);
         if (response.data.codeStatus === "success") {
           setShowReset(true);
+        } else {
+          const msg = "Wrong passcode, please try again";
+          openNotificationWithIcon("error", msg)
         }
       })
       .catch(function (error) {
+        setShowSpinner("none");
         console.log(error);
       });
   };
 
   const handleChangePass = async () => {
+     setShowSpinner("");
     if (password === confirmPassword) {
       await axios({
         method: "POST",
@@ -115,6 +128,7 @@ const Reset = () => {
         },
       })
         .then(function (response) {
+          setShowSpinner("none");
           console.log(response);
           handleCookie(response.data.token);
           if (response.data.token) {
@@ -122,6 +136,7 @@ const Reset = () => {
           }
         })
         .catch(function (error) {
+          setShowSpinner("none");
           console.log(error);
         });
     }
@@ -129,6 +144,36 @@ const Reset = () => {
 
   return (
     <div>
+      <div className="circleOne"></div>
+      <div className="circleTwo"></div>
+      <div>
+        <span
+          style={{
+            fontSize: "20px",
+            position: "absolute",
+            top: "4%",
+            right: "3%",
+            display: showSpinner,
+            fontFamily: "ABeeZee, sans-serif",
+          }}
+        >
+          Please wait..
+        </span>
+        <SpinnerCircularSplit
+          size={45}
+          thickness={137}
+          speed={98}
+          color="rgba(57, 172, 104, 1)"
+          secondaryColor="rgba(57, 172, 111, 0.3)"
+          style={{
+            position: "absolute",
+            top: "3%",
+            right: "13%",
+            display: showSpinner,
+          }}
+        />
+      </div>
+
       {!isSuccess && !showReset && (
         <div className="resetFormDiv">
           <h3 className="resetTitle">
@@ -179,7 +224,9 @@ const Reset = () => {
             </Col>
             <Col span={12}>
               <div>
-                <h3 className="passcodeTitle">Enter Passcode</h3>
+                <h3 className="passcodeTitle">
+                  Please enter the verification code received to your email
+                </h3>
               </div>
               <div className="passcodeNumDiv">
                 <input

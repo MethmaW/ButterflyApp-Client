@@ -105,7 +105,7 @@
 }
 
 .regBtn:hover{
- border-color: #316452 !important;
+    border-color: #316452 !important;
 }
 
 
@@ -144,7 +144,7 @@
 
 .passcodeTitle {
     font-family: 'ABeeZee', sans-serif;
-    font-size: 2rem;
+    font-size: 25px;
     color: #316452;
     margin-top: 30%;
 }
@@ -159,7 +159,7 @@
 }
 
 .passcodeNumDiv {
-    margin-top: 16%;
+    margin-top: 20%;
 }
 
 .passcodeNum:focus {
@@ -203,5 +203,57 @@
 }
 
 
+
+.ant-upload {
+    font-family: 'ABeeZee', sans-serif !important;
+  
+    border-radius: 100px !important;
+    border: 3px solid #94c5b4 !important;
+    background-color: #94c5b4 !important;
+
+}
+
+.ant-upload-list {
+  margin: 0 35% 0 35% !important;
+  padding: 0 4% 0 4% !important;
+}
+
+.ant-upload-list-item {
+    font-family: 'ABeeZee', sans-serif !important;
+    margin: 0 0% 0 0% !important;
+    border-radius: 100px !important;
+    border: 3px solid #94c5b4 !important;
+}
+
+.ant-upload-list-item-info {
+    margin: 0 0% 0 0% !important;
+    border-radius: 100px !important;
+}
+
+
+/* ---------------------------Circles------------------------------ */
+.circleOne {
+    width: 240px;
+    height: 230px;
+    background: #D0EDDC;
+    border: 3px solid #D0EDDC;
+    border-radius: 50%;
+    position: absolute;
+    top: -15%;
+    left: -1%;
+
+}
+
+.circleTwo {
+    width: 240px;
+    height: 250px;
+    background: #6D967E;
+    border: 3px solid #6D967E;
+    border-radius: 0 50% 50% 50%;
+    position: absolute;
+    top: -12%;
+    left: -8%;
+    opacity: 0.8;
+}
 
 

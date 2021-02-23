@@ -91,9 +91,12 @@ const Login = () => {
 
     const validMainPass = schema.validate(password);
 
+
     if (!validMainPass) {
       const msg = "Please enter a valid password";
       openNotificationWithIcon("error", msg);
+
+       
     }
 
     if (validEmailName && validMainPass) {
@@ -151,7 +154,7 @@ const Login = () => {
         if (response.data.error) {
           const msg = response.data.error;
           openNotificationWithIcon("error", msg);
-          setTimeout(() => setIsSuccess(false), 2000);
+          // setTimeout(() => setIsSuccess(false), 2000);
         }
 
         if (response.data.token) {
@@ -167,19 +170,36 @@ const Login = () => {
 
   return (
     <>
-      <SpinnerCircularSplit
-        size={69}
-        thickness={137}
-        speed={98}
-        color="rgba(57, 172, 104, 1)"
-        secondaryColor="rgba(57, 172, 111, 0.3)"
-        style={{
-          position: "absolute",
-          top: "4%",
-          right: "4%",
-          display: showSpinner,
-        }}
-      />
+      <div className="circleOne"></div>
+      <div className="circleTwo"></div>
+      <div>
+        <span
+          style={{
+            fontSize: "20px",
+            position: "absolute",
+            top: "4%",
+            right: "3%",
+            display: showSpinner,
+            fontFamily: "ABeeZee, sans-serif",
+          }}
+        >
+          Please wait..
+        </span>
+        <SpinnerCircularSplit
+          size={45}
+          thickness={137}
+          speed={98}
+          color="rgba(57, 172, 104, 1)"
+          secondaryColor="rgba(57, 172, 111, 0.3)"
+          style={{
+            position: "absolute",
+            top: "3%",
+            right: "13%",
+            display: showSpinner,
+          }}
+        />
+      </div>
+
       {!isSuccess && (
         <div className="logbox">
           <h1 className="brandName">Butterfly Diary</h1>
@@ -285,7 +305,9 @@ const Login = () => {
             </Col>
             <Col span={12}>
               <div>
-                <h3 className="passcodeTitle">Enter Passcode</h3>
+                <h3 className="passcodeTitle">
+                  Please enter the verification code received to your email
+                </h3>
               </div>
               <div className="passcodeNumDiv">
                 <input

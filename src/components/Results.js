@@ -21,7 +21,7 @@ const Results = () => {
       </Col>
       <Col offset={2} span={20} style={{ marginTop: "5%" }}>
         <h1 className="results">
-          Results for {colorsReducer} color(s) and {sizesReducer} sizes you
+          Results for {colorsReducer} color(s) and {sizesReducer} size(s) you
           selected
         </h1>
         {resultsReducer.map((card) => (
@@ -98,7 +98,9 @@ const Results = () => {
         ))}
 
         <p className="moreInfo">
-          <a>More Info...</a>
+          <a href="http://www.methma.tech/" target="_blank">
+            More Info...
+          </a>
         </p>
       </Col>
     </Row>

@@ -80,13 +80,12 @@ const Register = () => {
   //submiting register inputs to get the passcode
   const onFinish = async (values) => {
     //Profile picture
-    const validImg = fileList.length !== 0
+    const validImg = fileList.length !== 0;
     if (!validImg) {
       setIsImg("");
     } else {
-      setIsImg(fileList[0].thumbUrl)
+      setIsImg(fileList[0].thumbUrl);
     }
-
 
     //validating username
     const validName = name.length >= 6;
@@ -157,8 +156,6 @@ const Register = () => {
     }
   };
 
-  //  console.log(fileList[0].thumbUrl);
-
   //submitting the passcode
   const handlePasscode = async () => {
     setShowSpinner("");
@@ -184,7 +181,7 @@ const Register = () => {
         if (response.data.error) {
           const msg = response.data.error;
           openNotificationWithIcon("error", msg);
-          setTimeout(() => setIsSuccess(false), 2000);
+          // setTimeout(() => setIsSuccess(false), 2000);
         }
 
         if (response.data.token) {
@@ -200,19 +197,35 @@ const Register = () => {
 
   return (
     <>
-      <SpinnerCircularSplit
-        size={69}
-        thickness={137}
-        speed={98}
-        color="rgba(57, 172, 104, 1)"
-        secondaryColor="rgba(57, 172, 111, 0.3)"
-        style={{
-          position: "absolute",
-          top: "4%",
-          right: "4%",
-          display: showSpinner,
-        }}
-      />
+      <div className="circleOne"></div>
+      <div className="circleTwo"></div>
+      <div>
+        <span
+          style={{
+            fontSize: "20px",
+            position: "absolute",
+            top: "4%",
+            right: "3%",
+            display: showSpinner,
+            fontFamily: "ABeeZee, sans-serif",
+          }}
+        >
+          Please wait..
+        </span>
+        <SpinnerCircularSplit
+          size={45}
+          thickness={137}
+          speed={98}
+          color="rgba(57, 172, 104, 1)"
+          secondaryColor="rgba(57, 172, 111, 0.3)"
+          style={{
+            position: "absolute",
+            top: "3%",
+            right: "13%",
+            display: showSpinner,
+          }}
+        />
+      </div>
       {!isSuccess && (
         <div className="regbox">
           <h1 className="brandName">Butterfly Diary</h1>
@@ -235,8 +248,9 @@ const Register = () => {
                     fileList={fileList}
                     onChange={onChange}
                     onPreview={onPreview}
+                    className="test"
                   >
-                    {fileList.length <= 0 && "+ Upload"}
+                    {fileList.length <= 0 && "+ Upload Image"}
                   </Upload>
                 </ImgCrop>
               </Form.Item>
@@ -342,7 +356,9 @@ const Register = () => {
             </Col>
             <Col span={12}>
               <div>
-                <h3 className="passcodeTitle">Enter Passcode</h3>
+                <h3 className="passcodeTitle">
+                  Please enter the verification code received to your email
+                </h3>
               </div>
               <div className="passcodeNumDiv">
                 <input
