@@ -104,7 +104,7 @@ const Login = () => {
 
       await axios({
         method: "POST",
-        url: "http://localhost:8080/api/user/login",
+        url: "https://butterfly-diary-api.herokuapp.com/api/user/login",
         data: {
           email: email,
           password: password,
@@ -139,7 +139,8 @@ const Login = () => {
 
     await axios({
       method: "POST",
-      url: "http://localhost:8080/api/user/confirm-passcode",
+      url:
+        "https://butterfly-diary-api.herokuapp.com/api/user/confirm-passcode",
       data: {
         email: email,
         password: password,

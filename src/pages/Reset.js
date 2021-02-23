@@ -58,7 +58,8 @@ const Reset = () => {
       setShowSpinner("");
       await axios({
         method: "POST",
-        url: "http://localhost:8080/api/user/forgot-password",
+        url:
+          "https://butterfly-diary-api.herokuapp.com/api/user/forgot-password",
         data: {
           email: email,
         },
@@ -93,7 +94,8 @@ const Reset = () => {
 
     await axios({
       method: "POST",
-      url: "http://localhost:8080/api/user/forgot-password-passcode",
+      url:
+        "https://butterfly-diary-api.herokuapp.com/api/user/forgot-password-passcode",
       data: {
         email: email,
         code: code,
@@ -106,7 +108,7 @@ const Reset = () => {
           setShowReset(true);
         } else {
           const msg = "Wrong passcode, please try again";
-          openNotificationWithIcon("error", msg);;
+          openNotificationWithIcon("error", msg);
         }
       })
       .catch(function (error) {
@@ -120,7 +122,8 @@ const Reset = () => {
     if (password === confirmPassword) {
       await axios({
         method: "POST",
-        url: "http://localhost:8080/api/user/reset-password",
+        url:
+          "https://butterfly-diary-api.herokuapp.com/api/user/reset-password",
         data: {
           email: email,
           password: password,

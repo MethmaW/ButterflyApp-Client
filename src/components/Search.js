@@ -99,7 +99,7 @@ const Search = () => {
     if (validColors && validSizes) {
       await axios({
         method: "GET",
-        url: "http://localhost:8080/api/results",
+        url: "https://butterfly-diary-api.herokuapp.com/api/results",
         headers: {
           BD_TOKEN: authToken,
         },

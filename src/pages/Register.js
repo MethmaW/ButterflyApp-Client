@@ -130,7 +130,7 @@ const Register = () => {
 
       await axios({
         method: "POST",
-        url: "http://localhost:8080/api/user/register",
+        url: "https://butterfly-diary-api.herokuapp.com/api/user/register",
         data: {
           name: name,
           email: email,
@@ -163,7 +163,7 @@ const Register = () => {
 
     await axios({
       method: "POST",
-      url: "http://localhost:8080/api/user/confirm-email",
+      url: "https://butterfly-diary-api.herokuapp.com/api/user/confirm-email",
       data: {
         name: name,
         email: email,
@@ -241,7 +241,7 @@ const Register = () => {
                 <ImgCrop rotate>
                   <Upload
                     beforeUpload={ifSuccess}
-                    action="http://localhost:8080/temp/images"
+                    action="https://butterfly-diary-api.herokuapp.com/temp/images"
                     listType="picture-card"
                     fileList={fileList}
                     onChange={onChange}
