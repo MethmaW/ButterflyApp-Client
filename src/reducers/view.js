@@ -1,4 +1,4 @@
-const viewReducer = (state = "", action) => {
+const viewReducer = (state = "LOGIN", action) => {
   switch (action.type) {
     case "VIEW":
       return (state = action.payload);
