@@ -4,6 +4,7 @@ import axios from "axios";
 import { Row, Col, notification } from "antd";
 import "./search.css";
 import SideMenu from "./SideMenu";
+import { PoweroffOutlined } from "@ant-design/icons";
 
 //redux
 import { useDispatch } from "react-redux";
@@ -119,6 +120,12 @@ const Search = () => {
           // console.log(error);
         });
     }
+  };
+
+
+  const logOut = () => {
+    Cookies.remove("BD_AUTH");
+    dispatch(changeView("LOGIN"));
   };
 
   return (
@@ -361,6 +368,16 @@ const Search = () => {
           </Col>
         </Row>
       </form>
+      <PoweroffOutlined
+        style={{
+          position: "absolute",
+          fontSize: "30px",
+          color: "#1C6654",
+          top: "3%",
+          right: "3%",
+        }}
+        onClick={() => logOut()}
+      />
     </div>
   );
 };
