@@ -210,7 +210,7 @@ const Login = () => {
               clientId="717197083990-tf9pr22sv5sg2otukq03ve9m0sg0je61.apps.googleusercontent.com"
               buttonText="Login with Google"
               onSuccess={responseGoogle}
-              onFailure={failureGoogle}
+              onFailure={() => failureGoogle}
               cookiePolicy={"single_host_origin"}
               className="googleIn"
             />
