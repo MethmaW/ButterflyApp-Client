@@ -22,6 +22,7 @@
 }
 
 .googleIn {
+    height: 45px !important;
     width: 60%;
     background-color: #538568 !important;
     color: white;
@@ -86,7 +87,7 @@
 
 
 .logBtn {
-    height: 6vh !important;
+    height: 45px !important;
     background-color: #316452 !important;
     border-color: #316452 !important;
     width: 60% !important;
@@ -95,7 +96,7 @@
 }
 
 .regBtn {
-    height: 6vh !important;
+    height: 45px !important;
     background-color: #316452 !important;
     color: white !important;
     border-color: #316452 !important;
@@ -172,10 +173,11 @@
 }
 
 .passcodeBtn {
-    height: 5vh !important;
+    height: 43px !important;
     background-color: #316452 !important;
     border-color: #316452 !important;
     margin: 0 5% 0 0;
+    border-radius: 15px !important;
 }
 
 
@@ -233,8 +235,8 @@
 
 /* ---------------------------Circles------------------------------ */
 .circleOne {
-    width: 240px;
-    height: 230px;
+    width: 15%;
+    height: 27%;
     background: #D0EDDC;
     border: 3px solid #D0EDDC;
     border-radius: 50%;
@@ -245,8 +247,8 @@
 }
 
 .circleTwo {
-    width: 240px;
-    height: 250px;
+    width: 16%;
+    height: 30%;
     background: #6D967E;
     border: 3px solid #6D967E;
     border-radius: 0 50% 50% 50%;
