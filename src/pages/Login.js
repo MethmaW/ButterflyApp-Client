@@ -207,7 +207,7 @@ const Login = () => {
 
           <div className="loginForm">
             <GoogleLogin
-              clientId={process.env.REACT_APP_GCLIENTID}
+              clientId="717197083990-tf9pr22sv5sg2otukq03ve9m0sg0je61.apps.googleusercontent.com"
               buttonText="Login with Google"
               onSuccess={responseGoogle}
               onFailure={failureGoogle}
